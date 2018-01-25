@@ -26,6 +26,12 @@ void yyerror(const char *s) { fprintf(stderr, "Error: %s\n", s); }
 %token tBEGIN tEND							// statement block
 %token tSEMICOLON
 
+%left tOR
+%left tAND
+%left tEQUALS tNOTEQUALS
+%left tPLUS tMINUS
+%left tTIMES tDIV
+%left tNEGATE tNOT
 
 %%
 mini:
