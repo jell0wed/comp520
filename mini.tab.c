@@ -1695,7 +1695,9 @@ int main(int argc, char* argv[]) {
 
 	char* command = argv[1];
 	if (strcmp("scan", command) == 0) {
-		yylex();
+		while(yylex() != 0) {
+
+		}
 		printf("OK");
 		return 0;
 	} else if (strcmp("tokens", command) == 0) {
