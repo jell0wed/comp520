@@ -807,7 +807,7 @@ YY_RULE_SETUP
 case 4:
 YY_RULE_SETUP
 #line 14 "mini.l"
-;
+{ return tSEMICOLON; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP

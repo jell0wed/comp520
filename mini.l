@@ -11,7 +11,7 @@ ALLOWED_DATATYPES (float|boolean|int|string)
 [ \t\n\r]+				    ;
 \/\/([^\n]+)                ;
 :                           ;
-;                           ;
+;                           { return tSEMICOLON; }
 
 \{                          { return tBEGIN; }
 \}                          { return tEND; }
