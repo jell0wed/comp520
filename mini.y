@@ -68,6 +68,7 @@ expr:
 	  binary_expr
 	| unary_expr
 	| tIDENTIFIER
+	| litteral
 	| tLPAREN expr tRPAREN
 ;
 
@@ -79,28 +80,28 @@ litteral:
 ;
 
 binary_expr:
-	  litteral tPLUS litteral | expr tPLUS expr | litteral tPLUS expr | expr tPLUS litteral
-	| litteral tMINUS litteral | expr tMINUS expr | litteral tMINUS expr | expr tMINUS litteral
-	| litteral tTIMES litteral | expr tTIMES expr | litteral tTIMES expr | expr tTIMES litteral
-	| litteral tDIV litteral | expr tDIV expr | litteral tDIV expr | expr tDIV litteral
+	  expr tPLUS expr
+	| expr tMINUS expr
+	| expr tTIMES expr
+	| expr tDIV expr
 
-	| litteral tEQUALS litteral | expr tEQUALS expr | litteral tEQUALS expr | expr tEQUALS litteral
-	| litteral tNOTEQUALS litteral | expr tNOTEQUALS expr | litteral tNOTEQUALS expr | expr tNOTEQUALS litteral
+	| expr tEQUALS expr
+	| expr tNOTEQUALS expr
 	
 	| tBOOLEAN tAND tBOOLEAN | expr tAND expr
 	| tBOOLEAN tOR tBOOLEAN | expr tOR expr
 ;
 
 unary_expr:
-	  tNEGATE tINTEGER | tNEGATE tFLOAT | tNEGATE expr
-	| tMINUS tBOOLEAN | tMINUS expr
+	  tNEGATE expr
+	| tMINUS tINTEGER | tMINUS tFLOAT
 ;
 %%
 
 int main(int argc, char* argv[]) {
 	if (argc != 2) {
 		printf(stderr, "Wrong usage. Correct usage: ./mini {scan|tokens|parse} < input.min");
-		exit(1);
+		return 1;
 	}
 
 	char* command = argv[1];
