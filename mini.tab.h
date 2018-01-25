@@ -64,7 +64,9 @@
      tASSIGN = 280,
      tIF = 281,
      tELSE = 282,
-     tWHILE = 283
+     tWHILE = 283,
+     tLPAREN = 284,
+     tRPAREN = 285
    };
 #endif
 /* Tokens.  */
@@ -94,13 +96,15 @@
 #define tIF 281
 #define tELSE 282
 #define tWHILE 283
+#define tLPAREN 284
+#define tRPAREN 285
 
 
 
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 7 "mini.y"
+#line 6 "mini.y"
 {
 	int intval;
 	float floatval;
@@ -110,7 +114,7 @@ typedef union YYSTYPE
 	char* datatype;
 }
 /* Line 1529 of yacc.c.  */
-#line 114 "mini.tab.h"
+#line 118 "mini.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1

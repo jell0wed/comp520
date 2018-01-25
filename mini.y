@@ -2,8 +2,7 @@
 #include <stdio.h>
 void yyerror(const char *s) { fprintf(stderr, "Error: %s\n", s); }
 %}
-
-
+%token-table
 %union {
 	int intval;
 	float floatval;
@@ -23,6 +22,7 @@ void yyerror(const char *s) { fprintf(stderr, "Error: %s\n", s); }
 %token tPLUS tMINUS tTIMES tDIV tEQUALS tNOTEQUALS tAND tOR	// binary expressions
 %token tNEGATE tNOT							// unary expression
 %token tREAD tPRINT tASSIGN tIF tELSE tWHILE // statements
+%token tLPAREN tRPAREN
 
 
 %%
@@ -62,7 +62,7 @@ expr:
 ;
 
 litteral:
-	  tINTEGER
+	  tINTEGER { printf("%s", $1); }
 	| tFLOAT
 	| tBOOLEAN
 	| tSTRING
@@ -87,7 +87,24 @@ unary_expr:
 ;
 %%
 
-int main() {
-	yyparse();
+int main(int argc, char* argv[]) {
+	if (argc != 2) {
+		printf(stderr, "Wrong usage. Correct usage: ./mini {scan|tokens|parse} < input.min");
+		exit(1);
+	}
+
+	char* command = argv[1];
+	if (strcmp("scan", command) == 0) {
+		yylex();
+		printf("OK");
+		return 0;
+	} else if (strcmp("tokens", command) == 0) {
+		int token_type;
+		while((token_type = yylex()) != 0) {
+			printf("%s\n", yytname[YYTRANSLATE(token_type)]);
+		}
+	} else if (strcmp("parse", command) == 0) {
+		yyparse();
+	}
 	return 0;
 }

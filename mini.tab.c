@@ -91,7 +91,9 @@
      tASSIGN = 280,
      tIF = 281,
      tELSE = 282,
-     tWHILE = 283
+     tWHILE = 283,
+     tLPAREN = 284,
+     tRPAREN = 285
    };
 #endif
 /* Tokens.  */
@@ -121,6 +123,8 @@
 #define tIF 281
 #define tELSE 282
 #define tWHILE 283
+#define tLPAREN 284
+#define tRPAREN 285
 
 
 
@@ -147,12 +151,12 @@ void yyerror(const char *s) { fprintf(stderr, "Error: %s\n", s); }
 
 /* Enabling the token table.  */
 #ifndef YYTOKEN_TABLE
-# define YYTOKEN_TABLE 0
+# define YYTOKEN_TABLE 1
 #endif
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 7 "mini.y"
+#line 6 "mini.y"
 {
 	int intval;
 	float floatval;
@@ -162,7 +166,7 @@ typedef union YYSTYPE
 	char* datatype;
 }
 /* Line 193 of yacc.c.  */
-#line 166 "mini.tab.c"
+#line 170 "mini.tab.c"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -175,7 +179,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 179 "mini.tab.c"
+#line 183 "mini.tab.c"
 
 #ifdef short
 # undef short
@@ -393,7 +397,7 @@ union yyalloc
 #define YYLAST   156
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  29
+#define YYNTOKENS  31
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  10
 /* YYNRULES -- Number of rules.  */
@@ -403,7 +407,7 @@ union yyalloc
 
 /* YYTRANSLATE(YYLEX) -- Bison symbol number corresponding to YYLEX.  */
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   283
+#define YYMAXUTOK   285
 
 #define YYTRANSLATE(YYX)						\
   ((unsigned int) (YYX) <= YYMAXUTOK ? yytranslate[YYX] : YYUNDEFTOK)
@@ -439,7 +443,7 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
       15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
-      25,    26,    27,    28
+      25,    26,    27,    28,    29,    30
 };
 
 #if YYDEBUG
@@ -457,22 +461,22 @@ static const yytype_uint8 yyprhs[] =
 /* YYRHS -- A `-1'-separated list of the rules' RHS.  */
 static const yytype_int8 yyrhs[] =
 {
-      30,     0,    -1,    31,    33,    -1,    33,    -1,    31,    32,
-      -1,    32,    -1,    12,     7,     8,    25,     3,    -1,    12,
+      32,     0,    -1,    33,    35,    -1,    35,    -1,    33,    34,
+      -1,    34,    -1,    12,     7,     8,    25,     3,    -1,    12,
        7,     9,    25,     5,    -1,    12,     7,    10,    25,     4,
-      -1,    12,     7,    11,    25,     6,    -1,    33,    34,    -1,
-      34,    -1,    23,     7,    -1,    24,    35,    -1,     7,    25,
-      35,    -1,     7,    25,    36,    -1,    26,    35,    33,    -1,
-      26,    35,    33,    27,    33,    -1,    28,    35,    33,    -1,
-      37,    -1,    38,    -1,     3,    -1,     5,    -1,     4,    -1,
-       6,    -1,    36,    13,    36,    -1,    35,    13,    35,    -1,
-      36,    14,    36,    -1,    35,    14,    35,    -1,    36,    15,
-      36,    -1,    35,    15,    35,    -1,    36,    16,    36,    -1,
-      35,    16,    35,    -1,    36,    17,    36,    -1,    35,    17,
-      35,    -1,    36,    18,    36,    -1,    35,    18,    35,    -1,
-       4,    19,     4,    -1,    35,    19,    35,    -1,     4,    20,
-       4,    -1,    35,    20,    35,    -1,    21,     3,    -1,    21,
-       5,    -1,    21,    35,    -1,    14,     4,    -1,    14,    35,
+      -1,    12,     7,    11,    25,     6,    -1,    35,    36,    -1,
+      36,    -1,    23,     7,    -1,    24,    37,    -1,     7,    25,
+      37,    -1,     7,    25,    38,    -1,    26,    37,    35,    -1,
+      26,    37,    35,    27,    35,    -1,    28,    37,    35,    -1,
+      39,    -1,    40,    -1,     3,    -1,     5,    -1,     4,    -1,
+       6,    -1,    38,    13,    38,    -1,    37,    13,    37,    -1,
+      38,    14,    38,    -1,    37,    14,    37,    -1,    38,    15,
+      38,    -1,    37,    15,    37,    -1,    38,    16,    38,    -1,
+      37,    16,    37,    -1,    38,    17,    38,    -1,    37,    17,
+      37,    -1,    38,    18,    38,    -1,    37,    18,    37,    -1,
+       4,    19,     4,    -1,    37,    19,    37,    -1,     4,    20,
+       4,    -1,    37,    20,    37,    -1,    21,     3,    -1,    21,
+       5,    -1,    21,    37,    -1,    14,     4,    -1,    14,    37,
       -1
 };
 
@@ -496,9 +500,9 @@ static const char *const yytname[] =
   "tSTRING", "tIDENTIFIER", "tTINTEGER", "tTFLOAT", "tTBOOLEAN",
   "tTSTRING", "tVARDECL", "tPLUS", "tMINUS", "tTIMES", "tDIV", "tEQUALS",
   "tNOTEQUALS", "tAND", "tOR", "tNEGATE", "tNOT", "tREAD", "tPRINT",
-  "tASSIGN", "tIF", "tELSE", "tWHILE", "$accept", "mini", "var_dec_list",
-  "var_dec", "stmt_list", "stmt", "expr", "litteral", "binary_expr",
-  "unary_expr", 0
+  "tASSIGN", "tIF", "tELSE", "tWHILE", "tLPAREN", "tRPAREN", "$accept",
+  "mini", "var_dec_list", "var_dec", "stmt_list", "stmt", "expr",
+  "litteral", "binary_expr", "unary_expr", 0
 };
 #endif
 
@@ -509,18 +513,19 @@ static const yytype_uint16 yytoknum[] =
 {
        0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
      265,   266,   267,   268,   269,   270,   271,   272,   273,   274,
-     275,   276,   277,   278,   279,   280,   281,   282,   283
+     275,   276,   277,   278,   279,   280,   281,   282,   283,   284,
+     285
 };
 # endif
 
 /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,    29,    30,    30,    31,    31,    32,    32,    32,    32,
-      33,    33,    34,    34,    34,    34,    34,    34,    34,    35,
-      35,    36,    36,    36,    36,    37,    37,    37,    37,    37,
-      37,    37,    37,    37,    37,    37,    37,    37,    37,    37,
-      37,    38,    38,    38,    38,    38
+       0,    31,    32,    32,    33,    33,    34,    34,    34,    34,
+      35,    35,    36,    36,    36,    36,    36,    36,    36,    37,
+      37,    38,    38,    38,    38,    39,    39,    39,    39,    39,
+      39,    39,    39,    39,    39,    39,    39,    39,    39,    39,
+      39,    40,    40,    40,    40,    40
 };
 
 /* YYR2[YYN] -- Number of symbols composing right hand side of rule YYN.  */
@@ -626,15 +631,15 @@ static const yytype_int8 yycheck[] =
    symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,     7,    12,    23,    24,    26,    28,    30,    31,    32,
-      33,    34,    25,     7,     7,     3,     4,     5,     6,    14,
-      21,    35,    36,    37,    38,    35,    35,     0,    32,    33,
-      34,    35,    36,     8,     9,    10,    11,    19,    20,     4,
-      35,     3,     5,    35,    13,    14,    15,    16,    17,    18,
-      19,    20,    13,    14,    15,    16,    17,    18,    33,    33,
-      25,    25,    25,    25,     4,     4,    35,    35,    35,    35,
-      35,    35,    35,    35,     4,    36,    36,    36,    36,    36,
-      36,    27,     3,     5,     4,     6,    33
+       0,     7,    12,    23,    24,    26,    28,    32,    33,    34,
+      35,    36,    25,     7,     7,     3,     4,     5,     6,    14,
+      21,    37,    38,    39,    40,    37,    37,     0,    34,    35,
+      36,    37,    38,     8,     9,    10,    11,    19,    20,     4,
+      37,     3,     5,    37,    13,    14,    15,    16,    17,    18,
+      19,    20,    13,    14,    15,    16,    17,    18,    35,    35,
+      25,    25,    25,    25,     4,     4,    37,    37,    37,    37,
+      37,    37,    37,    37,     4,    38,    38,    38,    38,    38,
+      38,    27,     3,     5,     4,     6,    35
 };
 
 #define yyerrok		(yyerrstatus = 0)
@@ -1468,9 +1473,14 @@ yyreduce:
     { printf("Var declaration (%s = string) = %s", (yyvsp[(2) - (5)].identifierval), (yyvsp[(5) - (5)].stringval)); ;}
     break;
 
+  case 21:
+#line 65 "mini.y"
+    { printf("%s", (yyvsp[(1) - (1)].intval)); ;}
+    break;
+
 
 /* Line 1267 of yacc.c.  */
-#line 1474 "mini.tab.c"
+#line 1484 "mini.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1687,8 +1697,25 @@ yyreturn:
 #line 88 "mini.y"
 
 
-int main() {
-	yyparse();
+int main(int argc, char* argv[]) {
+	if (argc != 2) {
+		printf(stderr, "Wrong usage. Correct usage: ./mini {scan|tokens|parse} < input.min");
+		exit(1);
+	}
+
+	char* command = argv[1];
+	if (strcmp("scan", command) == 0) {
+		yylex();
+		printf("OK");
+		return 0;
+	} else if (strcmp("tokens", command) == 0) {
+		int token_type;
+		while((token_type = yylex()) != 0) {
+			printf("%s\n", yytname[YYTRANSLATE(token_type)]);
+		}
+	} else if (strcmp("parse", command) == 0) {
+		yyparse();
+	}
 	return 0;
 }
 

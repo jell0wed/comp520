@@ -1,15 +1,18 @@
 %{
 #include <stdio.h>
 #include "mini.tab.h"
+#define YYDEBUG 1
 %}
 ALLOWED_CHARS [ a-zA-Z0-9~@#$%^&\*\-\+/`<>=_|\'.,;:!^\{\}\[\]\(\)\\\a\b\f\n\r\t\v)]
-ALLOWED_IDENTIFIER [a-zA-Z_][a-zA-Z_0-9]+
+ALLOWED_IDENTIFIER [a-zA-Z_][a-zA-Z_0-9]*
 ALLOWED_DATATYPES (float|boolean|int|string)
 %option noyywrap
 %%
 [ \t\n\r]+				    ;
 \/\/([^\n]+)                ;
 :                           ;
+;                           ;
+(\{|\})                     ;
 
 \+                          { return tPLUS; }
 \-                          { return tMINUS; }
@@ -20,6 +23,9 @@ ALLOWED_DATATYPES (float|boolean|int|string)
 &&                          { return tAND; }
 \|\|                        { return tOR; } 
 !                           { return tNOT; }
+
+\(                          { return tLPAREN; }
+\)                          { return tRPAREN; }
 
 read                        { return tREAD; }
 print                       { return tPRINT; }
