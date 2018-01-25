@@ -1,0 +1,48 @@
+%{
+#include <stdio.h>
+void yyerror(const char *s) { fprintf(stderr, "Error: %s\n", s); }
+%}
+
+
+%union {
+	int intval;
+	float floatval;
+	int boolval;
+	char* stringval;
+}
+
+%token <intval> tINTEGER
+%token <boolval> tBOOLEAN
+%token <floatval> tFLOAT
+%token <stringval> tSTRING
+
+%%
+mini:
+	  var_dec_list stmt_list
+	| stmt_list
+;
+
+var_dec_list:
+	  var_dec_list var_dec
+	| var_dec
+;
+
+var_dec:
+
+;
+
+stmt_list:
+	  stmt_list stmt
+	| stmt
+;
+
+stmt:
+	  tINTEGER 		{ printf("Push Integer %i", $1); }
+	| tBOOLEAN		{ printf("Push Boolean %i", $1); }
+;
+%%
+
+int main() {
+	yyparse();
+	return 0;
+}
