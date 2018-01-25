@@ -12,7 +12,9 @@ ALLOWED_DATATYPES (float|boolean|int|string)
 \/\/([^\n]+)                ;
 :                           ;
 ;                           ;
-(\{|\})                     ;
+
+\{                          { return tBEGIN; }
+\}                          { return tEND; }
 
 \+                          { return tPLUS; }
 \-                          { return tMINUS; }
@@ -41,7 +43,7 @@ bool                        { return tTBOOLEAN; }
 string                      { return tTSTRING; }
 
 (TRUE|FALSE)				{ yylval.boolval = strcmp("TRUE", yytext) == 0 ? 1 : 0; return tBOOLEAN; }
-(0|[1-9]+)					{ yylval.intval = atoi(yytext); return tINTEGER; }
+(0|[1-9][0-9]*)				{ yylval.intval = atoi(yytext); return tINTEGER; }
 (0|[1-9]+).([0-9]+)			{ yylval.floatval = atof(yytext); return tFLOAT; }
 
 {ALLOWED_IDENTIFIER}        { yylval.identifierval = strdup(yytext); return tIDENTIFIER; }

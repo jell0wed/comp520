@@ -23,6 +23,7 @@ void yyerror(const char *s) { fprintf(stderr, "Error: %s\n", s); }
 %token tNEGATE tNOT							// unary expression
 %token tREAD tPRINT tASSIGN tIF tELSE tWHILE // statements
 %token tLPAREN tRPAREN
+%token tBEGIN tEND							// statement block
 
 
 %%
@@ -37,10 +38,10 @@ var_dec_list:
 ;
 
 var_dec:
-	  tVARDECL tIDENTIFIER tTINTEGER tASSIGN tINTEGER	{ printf("Var declaration (%s = int) = %d", $2, $5); }
-	| tVARDECL tIDENTIFIER tTFLOAT tASSIGN tFLOAT		{ printf("Var declaration (%s = float) = %.9f", $2, $5); }
-	| tVARDECL tIDENTIFIER tTBOOLEAN tASSIGN tBOOLEAN	{ printf("Var declaration (%s = boolean) = %i", $2, $5); }
-	| tVARDECL tIDENTIFIER tTSTRING tASSIGN tSTRING		{ printf("Var declaration (%s = string) = %s", $2, $5); }
+	  tVARDECL tIDENTIFIER tTINTEGER tASSIGN tINTEGER
+	| tVARDECL tIDENTIFIER tTFLOAT tASSIGN tFLOAT
+	| tVARDECL tIDENTIFIER tTBOOLEAN tASSIGN tBOOLEAN
+	| tVARDECL tIDENTIFIER tTSTRING tASSIGN tSTRING
 ;
 
 stmt_list:
@@ -52,30 +53,32 @@ stmt:
 	  tREAD tIDENTIFIER
 	| tPRINT expr
 	| tIDENTIFIER tASSIGN expr | tIDENTIFIER tASSIGN litteral
-	| tIF expr stmt_list | tIF expr stmt_list tELSE stmt_list
-	| tWHILE expr stmt_list
+	| tIF expr tBEGIN stmt_list tEND | tIF expr tBEGIN stmt_list tEND tELSE tBEGIN stmt_list tEND
+	| tWHILE expr tBEGIN stmt_list tEND
 ;
 
 expr:
 	  binary_expr
 	| unary_expr
+	| tIDENTIFIER
+	| tLPAREN expr tRPAREN
 ;
 
 litteral:
-	  tINTEGER { printf("%s", $1); }
+	  tINTEGER
 	| tFLOAT
 	| tBOOLEAN
 	| tSTRING
 ;
 
 binary_expr:
-	  litteral tPLUS litteral | expr tPLUS expr 
-	| litteral tMINUS litteral | expr tMINUS expr 
-	| litteral tTIMES litteral | expr tTIMES expr 
-	| litteral tDIV litteral | expr tDIV expr 
+	  litteral tPLUS litteral | expr tPLUS expr | litteral tPLUS expr | expr tPLUS litteral
+	| litteral tMINUS litteral | expr tMINUS expr | litteral tMINUS expr | expr tMINUS litteral
+	| litteral tTIMES litteral | expr tTIMES expr | litteral tTIMES expr | expr tTIMES litteral
+	| litteral tDIV litteral | expr tDIV expr | litteral tDIV expr | expr tDIV litteral
 
-	| litteral tEQUALS litteral | expr tEQUALS expr 
-	| litteral tNOTEQUALS litteral | expr tNOTEQUALS expr 
+	| litteral tEQUALS litteral | expr tEQUALS expr | litteral tEQUALS expr | expr tEQUALS litteral
+	| litteral tNOTEQUALS litteral | expr tNOTEQUALS expr | litteral tNOTEQUALS expr | expr tNOTEQUALS litteral
 	
 	| tBOOLEAN tAND tBOOLEAN | expr tAND expr
 	| tBOOLEAN tOR tBOOLEAN | expr tOR expr
@@ -104,7 +107,10 @@ int main(int argc, char* argv[]) {
 			printf("%s\n", yytname[YYTRANSLATE(token_type)]);
 		}
 	} else if (strcmp("parse", command) == 0) {
-		yyparse();
+		if(yyparse() == 0) {
+			printf("OK");
+			return 0;
+		}
 	}
 	return 0;
 }

@@ -66,7 +66,9 @@
      tELSE = 282,
      tWHILE = 283,
      tLPAREN = 284,
-     tRPAREN = 285
+     tRPAREN = 285,
+     tBEGIN = 286,
+     tEND = 287
    };
 #endif
 /* Tokens.  */
@@ -98,6 +100,8 @@
 #define tWHILE 283
 #define tLPAREN 284
 #define tRPAREN 285
+#define tBEGIN 286
+#define tEND 287
 
 
 
@@ -114,7 +118,7 @@ typedef union YYSTYPE
 	char* datatype;
 }
 /* Line 1529 of yacc.c.  */
-#line 118 "mini.tab.h"
+#line 122 "mini.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
