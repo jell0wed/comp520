@@ -4,7 +4,7 @@
 // and 
 // https://www.geeksforgeeks.org/program-to-find-remainder-without-using-modulo-or-operator/
 
-var n: int = 0;
+var n: int = 1111;
 var rev: int = 0;
 var num_mod_10: int = 0;
 
