@@ -10,7 +10,23 @@ ALLOWED_DATATYPES (float|boolean|int|string)
 [ \t\n\r]+				    ;
 \/\/([^\n]+)                ;
 :                           ;
-=                           ;
+
+\+                          { return tPLUS; }
+\-                          { return tMINUS; }
+\*                          { return tTIMES; }
+\/                          { return tDIV; }
+==                          { return tEQUALS; }
+!=                          { return tNOTEQUALS; }
+&&                          { return tAND; }
+\|\|                        { return tOR; } 
+!                           { return tNOT; }
+
+read                        { return tREAD; }
+print                       { return tPRINT; }
+=                           { return tASSIGN; }
+if                          { return tIF; }
+else                        { return tELSE; }
+while                       { return tWHILE; }
 
 var                         { return tVARDECL; }
 int                         { return tTINTEGER; }

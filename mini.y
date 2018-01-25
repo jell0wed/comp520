@@ -20,6 +20,10 @@ void yyerror(const char *s) { fprintf(stderr, "Error: %s\n", s); }
 %token <identifierval> tIDENTIFIER			// identifiers for variables
 %token tTINTEGER tTFLOAT tTBOOLEAN tTSTRING // type declarations 
 %token tVARDECL								// variable declaration
+%token tPLUS tMINUS tTIMES tDIV tEQUALS tNOTEQUALS tAND tOR	// binary expressions
+%token tNEGATE tNOT							// unary expression
+%token tREAD tPRINT tASSIGN tIF tELSE tWHILE // statements
+
 
 %%
 mini:
@@ -33,10 +37,10 @@ var_dec_list:
 ;
 
 var_dec:
-	  tVARDECL tIDENTIFIER tTINTEGER tINTEGER	{ printf("Var declaration (%s = int) = %d", $2, $4); }
-	| tVARDECL tIDENTIFIER tTFLOAT tFLOAT		{ printf("Var declaration (%s = float) = %.9f", $2, $4); }
-	| tVARDECL tIDENTIFIER tTBOOLEAN tBOOLEAN	{ printf("Var declaration (%s = boolean) = %i", $2, $4); }
-	| tVARDECL tIDENTIFIER tTSTRING tSTRING		{ printf("Var declaration (%s = string) = %s", $2, $4); }
+	  tVARDECL tIDENTIFIER tTINTEGER tASSIGN tINTEGER	{ printf("Var declaration (%s = int) = %d", $2, $5); }
+	| tVARDECL tIDENTIFIER tTFLOAT tASSIGN tFLOAT		{ printf("Var declaration (%s = float) = %.9f", $2, $5); }
+	| tVARDECL tIDENTIFIER tTBOOLEAN tASSIGN tBOOLEAN	{ printf("Var declaration (%s = boolean) = %i", $2, $5); }
+	| tVARDECL tIDENTIFIER tTSTRING tASSIGN tSTRING		{ printf("Var declaration (%s = string) = %s", $2, $5); }
 ;
 
 stmt_list:
@@ -45,13 +49,41 @@ stmt_list:
 ;
 
 stmt:
-	  tSTRING 		{ printf("Push String %s", $1); }
-	| tBOOLEAN		{ printf("Push Boolean %i", $1); }
-	| tFLOAT		{ printf("Push Float %.9f", $1); }
+	  tREAD tIDENTIFIER
+	| tPRINT expr
+	| tIDENTIFIER tASSIGN expr | tIDENTIFIER tASSIGN litteral
+	| tIF expr stmt_list | tIF expr stmt_list tELSE stmt_list
+	| tWHILE expr stmt_list
 ;
 
 expr:
+	  binary_expr
+	| unary_expr
+;
+
+litteral:
+	  tINTEGER
+	| tFLOAT
+	| tBOOLEAN
+	| tSTRING
+;
+
+binary_expr:
+	  litteral tPLUS litteral | expr tPLUS expr 
+	| litteral tMINUS litteral | expr tMINUS expr 
+	| litteral tTIMES litteral | expr tTIMES expr 
+	| litteral tDIV litteral | expr tDIV expr 
+
+	| litteral tEQUALS litteral | expr tEQUALS expr 
+	| litteral tNOTEQUALS litteral | expr tNOTEQUALS expr 
 	
+	| tBOOLEAN tAND tBOOLEAN | expr tAND expr
+	| tBOOLEAN tOR tBOOLEAN | expr tOR expr
+;
+
+unary_expr:
+	  tNEGATE tINTEGER | tNEGATE tFLOAT | tNEGATE expr
+	| tMINUS tBOOLEAN | tMINUS expr
 ;
 %%
 

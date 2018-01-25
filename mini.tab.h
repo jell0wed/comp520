@@ -48,7 +48,23 @@
      tTFLOAT = 264,
      tTBOOLEAN = 265,
      tTSTRING = 266,
-     tVARDECL = 267
+     tVARDECL = 267,
+     tPLUS = 268,
+     tMINUS = 269,
+     tTIMES = 270,
+     tDIV = 271,
+     tEQUALS = 272,
+     tNOTEQUALS = 273,
+     tAND = 274,
+     tOR = 275,
+     tNEGATE = 276,
+     tNOT = 277,
+     tREAD = 278,
+     tPRINT = 279,
+     tASSIGN = 280,
+     tIF = 281,
+     tELSE = 282,
+     tWHILE = 283
    };
 #endif
 /* Tokens.  */
@@ -62,6 +78,22 @@
 #define tTBOOLEAN 265
 #define tTSTRING 266
 #define tVARDECL 267
+#define tPLUS 268
+#define tMINUS 269
+#define tTIMES 270
+#define tDIV 271
+#define tEQUALS 272
+#define tNOTEQUALS 273
+#define tAND 274
+#define tOR 275
+#define tNEGATE 276
+#define tNOT 277
+#define tREAD 278
+#define tPRINT 279
+#define tASSIGN 280
+#define tIF 281
+#define tELSE 282
+#define tWHILE 283
 
 
 
@@ -78,7 +110,7 @@ typedef union YYSTYPE
 	char* datatype;
 }
 /* Line 1529 of yacc.c.  */
-#line 82 "mini.tab.h"
+#line 114 "mini.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
